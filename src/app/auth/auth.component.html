@@ -1,0 +1,88 @@
+<div class="container" *ngIf="!LoginMode">
+  <br />
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #SignUpForm="ngForm" (ngSubmit)="onSignUpSubmit(SignUpForm)">
+        <div class="form-group">
+          <label for="email">Type your E-mail</label>
+          <input
+            type="email"
+            ngModel
+            name="SignUpE-Mail"
+            id="email"
+            class="form-control"
+            required
+            email
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Type your Password</label>
+          <input
+            type="password"
+            name="SignUpPassword"
+            id="password"
+            class="form-control"
+            ngModel
+            required
+            minlength="6"
+          />
+        </div>
+        <br />
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!SignUpForm.valid"
+        >
+          SignUp
+        </button>
+        <hr />
+        <p class="text-muted">
+          <a (click)="onToggle()">Already Have an Account?</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="LoginMode">
+  <br />
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #LoginForm="ngForm" (ngSubmit)="onLoginSubmit(LoginForm)">
+        <div class="form-group">
+          <label for="email">Type your E-mail</label>
+          <input
+            type="email"
+            name="LoginE-Mail"
+            id="email"
+            ngModel
+            class="form-control"
+            required
+            email
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Type your Password</label>
+          <input
+            type="password"
+            name="LoginPassWord"
+            id="password"
+            class="form-control"
+            ngModel
+            required
+            minlength="6"
+          />
+        </div>
+        <br />
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!LoginForm.valid"
+        >
+          Login
+        </button>
+        <hr />
+        <p class="text-muted"><a (click)="onToggle()">Or Create One</a></p>
+      </form>
+    </div>
+  </div>
+</div>
