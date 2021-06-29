@@ -1,1 +1,45 @@
-<p>add-notes works!</p>
+<hr />
+<div class="container float">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #AddNoteForm="ngForm" (ngSubmit)="onAddNote(AddNoteForm.value)">
+        <div class="form-group">
+          <label for="NoteName">Your Note's Name</label>
+          <input
+            type="text"
+            name="NoteName"
+            id="NoteName"
+            placeholder="Your Notes Name"
+            ngModel
+            required
+            class="form-control"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="NoteDesc">Your Note's Description</label>
+          <textarea
+            name="NoteDesc"
+            id="NoteDesc"
+            cols="30"
+            rows="10"
+            class="form-control"
+            ngModel
+            required
+          ></textarea>
+        </div>
+        <br />
+        <div class="form-group">
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!AddNoteForm.valid"
+          >
+            Add Your Note
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<hr />
