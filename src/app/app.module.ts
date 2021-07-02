@@ -11,8 +11,11 @@ import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccountComponent } from './account/account.component';
 import { ReviewComponent } from './review/review.component';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
+import { LoaderComponent } from './loader/loader.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,8 @@ import { FormsModule } from '@angular/forms';
     AuthComponent,
     AccountComponent,
     ReviewComponent,
+    LoaderComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
