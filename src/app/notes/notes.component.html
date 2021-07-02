@@ -1,1 +1,55 @@
-<app-add-notes></app-add-notes>
+<div class="container">
+  <div class="might" *ngIf="ShowAddNotes">
+    <app-add-notes></app-add-notes>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+      <div class="alert alert-danger alert-dismissible" *ngIf="error">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <h3>An Error Occured</h3>
+        <strong>{{ error }}</strong>
+      </div>
+      <div class="wrapper">
+        <button class="btn btn-primary" (click)="onToggle()">
+          {{ ShowAddNotes ? "Back To Notes" : "Add Notes" }}
+          <i class="bi {{ ShowIcon ? 'bi-back' : 'bi-plus-lg' }}"></i>
+        </button>
+        &nbsp;
+        <button
+          class="btn btn-danger"
+          (click)="onClearPosts()"
+          *ngIf="!ShowAddNotes"
+        >
+          Clear All Posts <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
+      <br />
+      <div
+        class="alert alert-danger alert-dismissible"
+        *ngIf="loadedNotes.length < 1 && !error"
+      >
+        <a href="#" class="close" data-dismiss="alert" aria-label="close"
+          >&times;</a
+        >
+        <strong>No Notes were avalible</strong>
+      </div>
+      <br />
+      <div class="more" *ngIf="!ShowAddNotes">
+        <ul class="list-group" *ngIf="loadedNotes.length >= 1">
+          <li class="list-group-item" *ngFor="let note of loadedNotes">
+            <h1>
+              {{ note.title }}
+            </h1>
+            <p>
+              {{ note.desc }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

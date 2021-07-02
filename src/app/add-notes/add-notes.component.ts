@@ -12,8 +12,9 @@ import { DataService } from '../Shared/data.service';
 export class AddNotesComponent implements OnInit {
   Notes: Notes[] = [];
   Note!: string;
+
   constructor(private Data: DataService) {}
-  onAddNote(AddForm: { NoteName: string; NoteDesc: string }) {
+  onAddNote(AddForm: { title: string; desc: string }) {
     this.Data.onPostNotes(AddForm).subscribe((responseData) => {
       console.log(responseData);
       Swal.fire('Added', 'Added Note And Its Description', 'success');
