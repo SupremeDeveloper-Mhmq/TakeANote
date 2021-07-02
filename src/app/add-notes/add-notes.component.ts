@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Notes } from '../Shared/Notes.model';
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
+import { DataService } from '../Shared/data.service';
 @Component({
   selector: 'app-add-notes',
   templateUrl: './add-notes.component.html',
@@ -9,11 +11,13 @@ import Swal from 'sweetalert2';
 })
 export class AddNotesComponent implements OnInit {
   Notes: Notes[] = [];
-  constructor() {}
-  onAddNote(AddForm: { NoteName: string; NoteData: string }) {
-    console.log(AddForm.NoteName);
-    console.log(AddForm.NoteData);
-    Swal.fire('Added', 'Added', 'success');
+  Note!: string;
+  constructor(private Data: DataService) {}
+  onAddNote(AddForm: { NoteName: string; NoteDesc: string }) {
+    this.Data.onPostNotes(AddForm).subscribe((responseData) => {
+      console.log(responseData);
+      Swal.fire('Added', 'Added Note And Its Description', 'success');
+    });
   }
   ngOnInit(): void {}
 }
