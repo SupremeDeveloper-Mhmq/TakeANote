@@ -1,5 +1,5 @@
 export interface Notes {
-  NoteTitle: String;
-  NoteDescription: string;
-  key?: string;
+  title: String;
+  desc: string;
+  id?: string;
 }
