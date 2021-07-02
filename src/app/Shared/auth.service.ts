@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, Subject } from 'rxjs';
 import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { User } from './User.model';
+import { BehaviorSubject } from 'rxjs';
 
 export interface AuthResponseData {
   idToken: string;
@@ -17,7 +18,7 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null as any);
 
   constructor(private http: HttpClient) {}
   SignUp(email: string, password: string) {
@@ -57,17 +58,23 @@ export class AuthService {
       )
       .pipe(
         tap((resData) => {
-          const expirationDate = new Date(
-            new Date().getTime() + +resData.expiresIn * 1000
-          );
-          const user = new User(
+          this.handleAuthentication(
             resData.email,
             resData.localId,
             resData.idToken,
-            expirationDate
+            +resData.expiresIn
           );
-          this.user.next(user);
         })
       );
+  }
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, userId, token, expirationDate);
+    this.user.next(user);
   }
 }
