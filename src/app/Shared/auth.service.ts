@@ -6,6 +6,7 @@ import { SubjectSubscriber } from 'rxjs/internal/Subject';
 import { User } from './User.model';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
   idToken: string;
@@ -46,7 +47,8 @@ export class AuthService {
   SignUp(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAavxb-XYmsBiQgrtNzbRvJPJA3H3TPBIk',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
+          environment.firebaseAPIKey,
         {
           email: email,
           password: password,
@@ -71,7 +73,8 @@ export class AuthService {
   Login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAavxb-XYmsBiQgrtNzbRvJPJA3H3TPBIk',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
+          environment.firebaseAPIKey,
         {
           email: email,
           password: password,
