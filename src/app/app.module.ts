@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
 import { HeaderComponent } from './header/header.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HeaderComponent } from './header/header.component';
     ReviewComponent,
     LoaderComponent,
     HeaderComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
