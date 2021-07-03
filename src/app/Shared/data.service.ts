@@ -10,17 +10,31 @@ import { Notes } from './Notes.model';
 export class DataService {
   constructor(private http: HttpClient, private authService: AuthService) {}
   onPostNotes(NoteForm: { title: string; desc: string }) {
-    return this.http.post<{ name: string }>(
-      'https://takeanote-7ed14-default-rtdb.firebaseio.com/Notes.json',
-      NoteForm
+    return this.authService.user.pipe(
+      take(1),
+      exhaustMap((user) => {
+        let username = localStorage.getItem('UserName');
+        return this.http.post<{ name: string }>(
+          'https://takeanote-7ed14-default-rtdb.firebaseio.com/' +
+            username +
+            '.json',
+          NoteForm,
+          {
+            params: new HttpParams().set('auth', user._token),
+          }
+        );
+      })
     );
   }
   onFetchNotes() {
+    let username = localStorage.getItem('UserName');
     return this.authService.user.pipe(
       take(1),
       exhaustMap((user) => {
         return this.http.get<{ [key: string]: Notes }>(
-          'https://takeanote-7ed14-default-rtdb.firebaseio.com/Notes.json',
+          'https://takeanote-7ed14-default-rtdb.firebaseio.com/' +
+            username +
+            '.json',
           {
             params: new HttpParams().set('auth', user._token),
           }
@@ -38,8 +52,19 @@ export class DataService {
     );
   }
   onClearNotes() {
-    return this.http.delete(
-      'https://takeanote-7ed14-default-rtdb.firebaseio.com/Notes.json'
+    let username = localStorage.getItem('UserName');
+    return this.authService.user.pipe(
+      take(1),
+      exhaustMap((user) => {
+        return this.http.delete(
+          'https://takeanote-7ed14-default-rtdb.firebaseio.com/' +
+            username +
+            '.json',
+          {
+            params: new HttpParams().set('auth', user._token),
+          }
+        );
+      })
     );
   }
   onStoreReview(ReviewForm: { Subject: string; Text: string }) {

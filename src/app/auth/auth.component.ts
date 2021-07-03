@@ -32,6 +32,11 @@ export class AuthComponent implements OnInit {
     this.authService.Login(email, password).subscribe(
       (resData) => {
         console.log(resData);
+        if (resData.registered) {
+          localStorage.setItem('UserName', resData.localId);
+        } else {
+          Swal.fire('First Log In', 'Login First', 'error');
+        }
         this.isLoading = false;
         Swal.fire(
           'Loged In Successfully',
