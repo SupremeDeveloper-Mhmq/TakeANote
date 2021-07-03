@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { DataService } from '../Shared/data.service';
 import { Notes } from '../Shared/Notes.model';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notes',
@@ -15,7 +16,7 @@ export class NotesComponent implements OnInit {
   ShowIcon!: boolean;
   error = null;
 
-  constructor(private Data: DataService) {}
+  constructor(private Data: DataService, private router: Router) {}
 
   ngOnInit(): void {
     this.Data.onFetchNotes().subscribe(
@@ -32,6 +33,10 @@ export class NotesComponent implements OnInit {
       (error) => {
         console.log(error);
         this.error = error.message;
+        if (error.message === "Cannot read property '_token' of null") {
+          Swal.fire('You Are Not Logged in', 'Log In First', 'error');
+          this.router.navigate(['../Auth']);
+        }
       }
     );
   }
